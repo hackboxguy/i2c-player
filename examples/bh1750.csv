@@ -1,0 +1,13 @@
+# BH1750 Light Sensor Reading Script
+#command,addr,reg,data
+# Power on the sensor
+WRITE1,0x23,0x01
+
+# One Time H-Resolution Mode 2 (most sensitive)
+WRITE1,0x23,0x21
+DELAY,180
+START_RECORD,2
+READ,0x23,0x00
+READ,0x23,0x00
+STOP_RECORD
+PRINT_RECORD,BH1750

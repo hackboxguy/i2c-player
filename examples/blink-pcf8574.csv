@@ -1,0 +1,11 @@
+# Toggle PCF8574 bit0 at 10Hz for about 7 seconds in total to complete the loop
+#command,addr,reg,data
+# Initialize all bits high
+WRITE1,0x38,0xFF
+# Loop 30 times (~7 seconds at 10Hz)
+LOOP,30
+WRITE1,0x38,0xFE    # bit0 low
+DELAY,100           # 100ms delay
+WRITE1,0x38,0xFF    # bit0 high
+DELAY,100           # 100ms delay
+ENDLOOP

@@ -1,0 +1,38 @@
+# BMP280 Sensor Reading Script
+command,addr,reg,data
+
+# Reset the device
+WRITE,0x76,0xE0,0xB6
+
+# Wait for reset to complete
+DELAY,100
+
+# Read chip ID to verify device
+READ,0x76,0xD0
+
+# Configure the sensor
+# Config Register (0xF5): Normal mode, standby time 62.5ms, IIR filter x16
+WRITE,0x76,0xF5,0x50
+
+# Control Register (0xF4): Normal mode, oversampling pressure x4, oversampling temp x4
+WRITE,0x76,0xF4,0x57
+
+# Wait for configuration to take effect
+DELAY,100
+
+# Create a buffer for temperature and pressure
+START_RECORD,6
+
+# Read temperature (0xFA, 0xFB, 0xFC)
+READ,0x76,0xFA
+READ,0x76,0xFB
+READ,0x76,0xFC
+
+# Read pressure (0xF7, 0xF8, 0xF9)
+READ,0x76,0xF7
+READ,0x76,0xF8
+READ,0x76,0xF9
+
+# Stop recording and parse the data
+STOP_RECORD
+PRINT_RECORD,BMP280
